@@ -2,7 +2,7 @@
   let start = document.getElementById("submit-start")
   let timeElapsed = 0;
   let time = Date();
-
+  console.log(window.location.href)
   
   // console.log(time);
 
