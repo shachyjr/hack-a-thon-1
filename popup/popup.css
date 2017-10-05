@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 40px;
+}
+
+#time-spent {
+
+}
+
+.button {
+  border: 1px solid black;
+  border-radius: 4px;
+  color: white;
+  padding: 5px;
+  background-color: olivedrab;
+}
