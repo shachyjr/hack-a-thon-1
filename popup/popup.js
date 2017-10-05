@@ -1,17 +1,32 @@
 
-let start = document.getElementById("submit-start")
-let timeElapsed = 0;
-let time = Date.now();
-let stop = document.getElementById("submit-res")
-
-//Clearing 
+let start = document.getElementById("submit-start");
+// let timeElapsed = 0;
+// let time = Date.now();
 
 // controlls timers
 start.addEventListener("click", function(){
-  timeElapsed = Date.now() - time;
-  let timeDiv = document.getElementById("time-spent");
-  
-  timeDiv.innerText = getTime(timeElapsed);
+  // timeElapsed = Date.now() - time;
+  // let timeDiv = document.getElementById("time-spent");
+  localStorage.clear();
+  // timeDiv.innerText = getTime(timeElapsed);
+  chrome.tabs.query({}, function(tabs) {
+    // console.log(tabs);
+    tabs.forEach((tabInd) => {
+      let tabURL = tabInd.url;
+      let tabID = tabInd.id;
+      let tabTitle = tabInd.title;
+      let tabObj = {
+        id: tabID,
+        url: tabURL,
+        title: tabTitle,
+        startTime: Date.now(),
+        timeElapsed: 0,
+        closed: false,
+        category: ""
+      }
+      localStorage[tabObj.id] = JSON.stringify(tabObj);
+    });
+  });
 })
 
 // processes time difference in milliseconds to make it readable for user
@@ -58,44 +73,48 @@ function getTime(totalSeconds) {
 }
 console.log(chrome.tabs.Tab)
 
-// gets url of current tab and logs it
-chrome.tabs.getSelected(null, function(tab){
-  console.log(tab.url);
+// add listener for when tab is closed
+chrome.tabs.onRemoved.addListener(function(id) {
+  let currTime = Date.now();
+  if (localStorage[id]) {
+    let parsedObj = JSON.parse(localStorage[id]);
+    let startTime = parsedObj.startTime;
+    parsedObj.timeElapsed = currTime - startTime;
+    parsedObj.closed = true;
+    localStorage[id] = JSON.stringify(parsedObj);
+  }
+  
 });
-// chrome.storage.sync(set)
-var tabObjs = [];
-// get all tabs in window - 
-chrome.tabs.query({}, function(tabs) {
-  tabs.forEach((tabInd) => {
-    let tabURL = tabInd.url;
-    let tabID = tabInd.tabID;
-    let time = 0;
-    let tabObj = {
-      id: tabID,
-      url: tabURL,
-      time: time
-    }
-    // tabObjs.push(tabObj);
-    chrome.storage.sync.set(tabObj, function() {
-      console.log(`data saved!`);
+
+
+function displayData() {
+  chrome.tabs.query({},function(tabs) {
+    tabs.forEach(function(tab) {
+      let tabObj = localStorage[tab.id]
+      if(tabObj) {
+        let urlDiv = document.createElement('p')
+        urlDiv.setAttribute('class', 'url')
+        urlDiv.innerHTML = tabObj.url
+
+        let titleDiv = document.createElement('p')
+        titleDiv.setAttribute('class', 'title')
+        titleDiv.innerHTML = tabObj.title
+
+        let timeDiv = document.createElement('p')
+        timeDiv.setAttribute('class', 'time')
+        timeDiv.innerHTML = tabObj.timeElapsed
+
+        let stat = document.getElementById('stats')
+        stat.appendChild(timeDiv)
+        stat.appendChild(titleDiv)
+        stat.appendChild(timeDiv)
+      }
     })
-  });
-});
+  })
+}
+// localStorage.clear(); - on click summary
+// divide time elaped by 1000 before calling getTime();
 
-var tabObjs;
-chrome.storage.sync.get(null, function(items){
-  console.log(items);
-});
-
-// tabObjs.forEach((tab) => {
-//   console.log(tab);
-//   // start timer 
-//   // add to object keeping track
-// });
-
-chrome.tabs.onCreated.addListener(function() {
-  //tabObjs[0].time = 37;
-});
 
 
 // function getMet(){
@@ -117,10 +136,8 @@ chrome.tabs.onCreated.addListener(function() {
 
 
 
-  let review = document.getElementById("submit-review")
-  review.addEventListener('click', function() {
-    chrome.tabs.create({'url': chrome.extension.getURL('newtab.html'), 'highlighted': 'true'});    
-  })
+  // let review = document.getElementById("submit-review")
+  // review.addEventListener('click', displayData)
 
 
 
