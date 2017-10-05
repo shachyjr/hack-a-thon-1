@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+* {
+    font-size: 24px;
+    text-align: center;
+    font-family: 'Roboto';
+}
+
+#stats {
+    padding: 50px;
+}

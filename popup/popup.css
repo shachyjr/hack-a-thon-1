@@ -1,7 +1,31 @@
-body {
-    background-color: cornflowerblue;
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
 }
 
-input {
-    border-radius: 2px;
+body {
+  padding: 20px;
+  background-color: cornflowerblue;
+}
+
+.button {
+  border: 1px solid black;
+  border-radius: 4px;
+  color: white;
+  padding: 5px;
+  background-color: #a4c639;
+  text-align: center;
+  margin: 5px;
+  border: none;
+}
+
+a{
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
 }

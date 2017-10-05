@@ -4,24 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <link rel="stylesheet" href="popup.css">
   <title>Document</title>
 </head>
 <body>
-  <div class="card-panel teal lighten-2">
-  <h1>hello</h1>
-  <form id="menu" action="">
-    <input type="button" id="submit-start" value="start">
-    <input type="button" id ="submit-end" value="end">
-    <input type="button" id ="submit-res" value="restart">
-  </form>
-  <div id="time-spent">0</div>
+  <div id="menu" action="">
+    <div class="button" id="submit-start">Start</div>
+    <div class="button" id ="submit-res">Restart</div>
+    <div class="button" id ="submit-review"><a target='_blank' href='newtab.html'>Review</a></div>
   </div>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <div id="time-spent">
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>
