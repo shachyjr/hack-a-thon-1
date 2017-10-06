@@ -1,10 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 * {
     font-size: 24px;
     text-align: center;
     font-family: 'Roboto';
 }
 
+h1 {
+    font-family: 'Roboto';
+    letter-spacing: 0.2em;
+    font-weight: bold;
+}
+
+#description {
+    font-family: 'Raleway';
+}
+
 #stats {
+    color: white;
     padding: 50px;
 }
